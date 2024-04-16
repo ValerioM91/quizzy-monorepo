@@ -1,0 +1,19 @@
+{
+  "name": "api-contract",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "dependencies": {
+    "@ts-rest/core": "3.44.0",
+    "@ts-rest/open-api": "3.44.0",
+    "@anatine/zod-openapi": "2.2.5",
+    "typescript": "latest",
+    "zod": "3.22.4",
+    "database": "*"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  }
+}
