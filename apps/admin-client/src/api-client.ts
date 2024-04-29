@@ -1,9 +1,9 @@
-import { initQueryClient } from '@ts-rest/react-query'
-import { contract } from 'api-contract'
+import { initQueryClient } from "@ts-rest/react-query"
+import { contract } from "api-contract"
 
-const client = initQueryClient(contract, {
+const apiClient = initQueryClient(contract, {
   baseHeaders: {},
-  baseUrl: '',
+  baseUrl: "",
 })
 
-export default client
+export default apiClient

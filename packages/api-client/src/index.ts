@@ -1,7 +1,9 @@
 import { initContract } from '@ts-rest/core'
 import {
   CategorySchema,
+  GenerateWithAISchema,
   QuestionCreateManySchema,
+  QuestionCreateSchema,
   QuestionGetQuerySchema,
   QuestionSchema,
 } from './schemas'
@@ -47,7 +49,7 @@ export const contract = c.router(
         pathParams: z.object({
           id: z.coerce.number(),
         }),
-        body: z.any(),
+        body: z.object({}),
         responses: {
           204: z.object({ success: z.boolean() }),
           404: z.object({
@@ -73,18 +75,42 @@ export const contract = c.router(
           201: z.object({ success: z.boolean() }),
         },
       },
+      patch: {
+        method: 'PATCH',
+        path: '/questions/:id',
+        pathParams: z.object({
+          id: z.coerce.number(),
+        }),
+        body: QuestionSchema.omit({ id: true }),
+        responses: {
+          200: QuestionSchema,
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
       delete: {
         method: 'DELETE',
         path: '/questions/:id',
         pathParams: z.object({
           id: z.coerce.number(),
         }),
-        body: z.undefined(),
+        body: z.object({}),
         responses: {
-          204: z.undefined(),
+          204: z.null(),
           404: z.object({
             message: z.string(),
           }),
+        },
+      },
+    },
+    openAI: {
+      generateMany: {
+        method: 'POST',
+        path: '/openai',
+        body: GenerateWithAISchema,
+        responses: {
+          200: QuestionCreateManySchema,
         },
       },
     },
@@ -94,3 +120,5 @@ export const contract = c.router(
     strictStatusCode: true,
   }
 )
+
+export * from './schemas'

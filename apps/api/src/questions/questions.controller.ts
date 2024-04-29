@@ -45,6 +45,15 @@ export class QuestionsController {
         };
       },
 
+      patch: async ({ body, params: { id } }) => {
+        const updatedQuestion = await this.questionsService.patch(id, body);
+
+        return {
+          status: 200,
+          body: updatedQuestion,
+        };
+      },
+
       delete: async ({ params: { id } }) => {
         await this.questionsService.delete(id);
 

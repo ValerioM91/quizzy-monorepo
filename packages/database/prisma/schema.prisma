@@ -26,7 +26,7 @@ model Question {
   incorrectAnswers String[]
   difficulty       Difficulty @default(medium)
   categoryId       Int
-  category         Category   @relation(fields: [categoryId], references: [id])
+  category         Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 }
 
 model Category {

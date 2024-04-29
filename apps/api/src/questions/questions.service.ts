@@ -21,6 +21,10 @@ export class QuestionsService {
     return await this.prisma.question.createMany({ data: questions });
   }
 
+  async patch(id: number, question: Prisma.QuestionUpdateInput) {
+    return await this.prisma.question.update({ where: { id }, data: question });
+  }
+
   async delete(id: number) {
     return await this.prisma.question.delete({ where: { id } });
   }
