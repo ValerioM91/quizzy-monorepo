@@ -53,11 +53,9 @@ const EditCategoryForm = ({ closeModal, category }: EditCategoryForm) => {
           />
         </div>
 
-        <div className="flex items-center gap-4">
-          <Button disabled={isLoading} type="submit" colorSchema="purple">
-            Add
-          </Button>
-        </div>
+        <Button disabled={isLoading} type="submit" colorSchema="purple">
+          Edit
+        </Button>
       </form>
     </Modal>
   )

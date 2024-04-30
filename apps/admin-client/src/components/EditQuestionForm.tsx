@@ -33,7 +33,7 @@ const EditQuestionForm = ({ closeModal, questionData }: EditQuestionForm) => {
   })
 
   return (
-    <Modal closeModal={closeModal} modalLabel="Edit question">
+    <Modal closeModal={closeModal} modalLabel="Edit question" className="max-w-screen-md">
       <ModalHeader closeModal={closeModal} title="Edit question" />
 
       <form
@@ -81,9 +81,9 @@ const EditQuestionForm = ({ closeModal, questionData }: EditQuestionForm) => {
           />
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex justify-end gap-4">
           <Button disabled={isLoading} type="submit" colorSchema="purple">
-            Add
+            Save
           </Button>
         </div>
       </form>

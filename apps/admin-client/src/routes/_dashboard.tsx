@@ -5,7 +5,7 @@ import SideNav from "../components/ui/Sidenav"
 
 export const Route = createFileRoute("/_dashboard")({
   component: () => (
-    <div className="mx-auto h-[100dvh] w-full max-w-screen-2xl md:grid md:grid-cols-[20rem_1fr]">
+    <div className="mx-auto h-[100dvh] w-full md:grid md:grid-cols-[20rem_1fr]">
       <div>
         <SidenavToggle />
         <SideNav className="peer-checked:translate-x-0" />
@@ -21,8 +21,12 @@ export const Route = createFileRoute("/_dashboard")({
         </div>
       </div>
 
-      <div className="flex h-[100%] flex-col overflow-y-hidden pt-10">
-        <Outlet />
+      <div className="flex h-[100%] flex-col overflow-y-hidden">
+        <div className="overflow-auto pb-5 pt-10">
+          <div className="mx-auto max-w-screen-2xl">
+            <Outlet />
+          </div>
+        </div>
       </div>
     </div>
   ),

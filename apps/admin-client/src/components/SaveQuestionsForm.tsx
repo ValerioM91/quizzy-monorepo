@@ -25,7 +25,7 @@ const SaveQuestionsForm = ({ questions, categoryId, difficulty }: SaveQuestionsF
     onSuccess() {
       showDefaultNotificationToast({ title: "Questions saved successfully" })
       queryClient.invalidateQueries(["questions.get", categoryId, difficulty])
-      router.navigate({ to: "/questions" })
+      router.navigate({ to: "/questions", search: { category: categoryId, difficulty } })
     },
   })
 
@@ -47,7 +47,7 @@ const SaveQuestionsForm = ({ questions, categoryId, difficulty }: SaveQuestionsF
 
   return (
     <form onSubmit={submitHandler}>
-      <div className="space-y-4">
+      <div className="mb-4 space-y-4">
         {questions.map(question => (
           <Question
             key={question.question}
@@ -57,9 +57,11 @@ const SaveQuestionsForm = ({ questions, categoryId, difficulty }: SaveQuestionsF
           />
         ))}
       </div>
-      <Button type="submit" disabled={isLoading}>
-        Save
-      </Button>
+      <div className="flex justify-end">
+        <Button type="submit" disabled={isLoading}>
+          Save
+        </Button>
+      </div>
     </form>
   )
 }

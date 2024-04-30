@@ -1,20 +1,43 @@
-import { createLazyFileRoute } from "@tanstack/react-router"
+import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { z } from "zod"
+
 import { Difficulty } from "database"
-import { useState } from "react"
-import Select from "../../components/ui/Select"
 import apiClient from "../../api-client"
+
+import Select from "../../components/ui/Select"
 import QuestionsTable from "../../components/ui/QuestionsTable"
 import Label from "../../components/ui/Label"
 
-export const Route = createLazyFileRoute("/_dashboard/questions")({
+export const Route = createFileRoute("/_dashboard/questions")({
   component: Questions,
+  validateSearch: z.object({
+    category: z.coerce.string().catch(""),
+    difficulty: z.enum(["easy", "medium", "hard"]).catch("easy"),
+  }),
+  onError: () => {},
 })
 
 function Questions() {
-  const { data: categories } = apiClient.category.getAll.useQuery(["category.getAll"])
+  const navigate = useNavigate({ from: Route.fullPath })
+  const { category, difficulty } = Route.useSearch()
 
-  const [difficulty, setDifficulty] = useState<Difficulty | "">("")
-  const [categoryId, setCategoryId] = useState<number | "">("")
+  const { data: categories } = apiClient.category.getAll.useQuery(["category.getAll"])
+  const { data } = apiClient.questions.get.useQuery(
+    ["questions.get", category, difficulty],
+    { query: { categoryId: +category, difficulty } },
+    { enabled: !!category && +category > 0 && !!difficulty },
+  )
+
+  const handleChange = ({
+    name,
+    value,
+  }: { name: "difficulty"; value: Difficulty } | { name: "category"; value: number }) => {
+    if (name === "difficulty") {
+      navigate({ search: { category, difficulty: value } })
+    } else {
+      navigate({ search: { category: value, difficulty } })
+    }
+  }
 
   return (
     <div className="container mx-auto">
@@ -25,7 +48,11 @@ function Questions() {
       <div className="mb-12 flex w-full items-center gap-8">
         <div className="flex-1">
           <Label htmlFor="categoryId">Category</Label>
-          <Select value={categoryId} onChange={e => setCategoryId(+e.target.value)} id="categoryId">
+          <Select
+            value={category || ""}
+            onChange={e => handleChange({ name: "category", value: +e.target.value })}
+            id="categoryId"
+          >
             <option value="">Select a category</option>
             {categories?.body?.map(category => (
               <option key={category.id} value={category.id}>
@@ -37,7 +64,11 @@ function Questions() {
 
         <div className="flex-1">
           <Label htmlFor="difficulty">Difficulty</Label>
-          <Select value={difficulty} onChange={e => setDifficulty(e.target.value as Difficulty)} id="difficulty">
+          <Select
+            value={difficulty || ""}
+            onChange={e => handleChange({ name: "difficulty", value: e.target.value as Difficulty })}
+            id="difficulty"
+          >
             <option value="">Select a difficulty</option>
 
             <option value="easy">Easy</option>
@@ -47,7 +78,7 @@ function Questions() {
         </div>
       </div>
 
-      {!!categoryId && !!difficulty && <QuestionsTable categoryId={categoryId} difficulty={difficulty} />}
+      {data && <QuestionsTable questions={data.body} />}
     </div>
   )
 }

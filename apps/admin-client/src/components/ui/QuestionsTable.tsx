@@ -1,29 +1,23 @@
 import { useState } from "react"
 import { PiTrashBold } from "react-icons/pi"
 
-import { Question, Difficulty } from "database"
-import apiClient from "../../api-client"
+import { Question } from "database"
 
 import EditQuestionButton from "../EditQuestionForm"
 import DeleteQuestionModal from "../DeleteQuestionModal"
 import Button from "./Button"
 
 type QuestionsTable = {
-  categoryId: number
-  difficulty: Difficulty
+  questions: Question[]
 }
 
-const QuestionsTable = ({ categoryId, difficulty }: QuestionsTable) => {
-  const { data } = apiClient.questions.get.useQuery(["questions.get", categoryId, difficulty], {
-    query: { categoryId, difficulty },
-  })
-
+const QuestionsTable = ({ questions }: QuestionsTable) => {
   return (
     <div className="rounded-2xl bg-base-100 px-4 py-12 shadow-sm">
       <table className={tableClasses.table}>
         <thead>
           <tr className={tableClasses.trHead}>
-            <th className="px-4">name</th>
+            <th className="px-4">Question ({questions.length})</th>
             <th className="px-4">correct answer</th>
             <th className="px-4">incorrect answers</th>
             <th className={tableClasses.thButton}></th>
@@ -31,7 +25,9 @@ const QuestionsTable = ({ categoryId, difficulty }: QuestionsTable) => {
           </tr>
         </thead>
         <tbody className={tableClasses.tBody}>
-          {data?.body.map(question => <TableRow key={question.id} {...question} />)}
+          {questions.map(question => (
+            <TableRow key={question.id} {...question} />
+          ))}
         </tbody>
       </table>
     </div>
