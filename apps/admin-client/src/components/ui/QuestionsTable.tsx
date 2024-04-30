@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { PiTrashBold } from "react-icons/pi"
 
-import { Question } from "database"
+import { type Question } from "database"
 
 import EditQuestionButton from "../EditQuestionForm"
 import DeleteQuestionModal from "../DeleteQuestionModal"

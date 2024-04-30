@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { z } from "zod"
 
-import { Difficulty } from "database"
+import { type Difficulty } from "database"
 import apiClient from "../../api-client"
 
 import Select from "../../components/ui/Select"
@@ -24,7 +24,7 @@ function Questions() {
   const { data: categories } = apiClient.category.getAll.useQuery(["category.getAll"])
   const { data } = apiClient.questions.get.useQuery(
     ["questions.get", category, difficulty],
-    { query: { categoryId: +category, difficulty } },
+    { query: { categoryId: +category, difficulty, amount: Infinity } },
     { enabled: !!category && +category > 0 && !!difficulty },
   )
 

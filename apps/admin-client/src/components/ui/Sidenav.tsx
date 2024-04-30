@@ -1,6 +1,6 @@
 import Link from "../ui/Link"
 import { cn } from "../../utils/cn"
-import { IconType } from "react-icons"
+import { type IconType } from "react-icons"
 import { BiCategory, BiQuestionMark } from "react-icons/bi"
 import { GiArtificialIntelligence } from "react-icons/gi"
 import { SIDENAV_INPUT_ID } from "../../config"

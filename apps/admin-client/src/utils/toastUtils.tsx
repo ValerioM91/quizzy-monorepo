@@ -1,5 +1,5 @@
 import toast from "react-hot-toast"
-import NotificationToast, { NotificationToastProps } from "../components/ui/NotificationToast"
+import NotificationToast, { type NotificationToastProps } from "../components/ui/NotificationToast"
 
 const TITLE_DEFAULT = "Success"
 const CONTENT_DEFAULT = "Details successfully changed"

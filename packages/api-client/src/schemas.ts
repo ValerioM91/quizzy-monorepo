@@ -40,6 +40,7 @@ export const CategorySchema = z.object({
 export const QuestionGetQuerySchema = z.object({
   categoryId: z.coerce.number(),
   difficulty,
+  amount: z.coerce.number(),
 })
 
 export const QuestionOpenSchema = z.object({

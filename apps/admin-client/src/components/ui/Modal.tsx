@@ -45,7 +45,7 @@ const Modal = ({
       >
         <div
           className={cn(
-            "rounded-4xl relative mx-auto flex max-h-full w-full max-w-xl flex-col border-0 bg-white p-8 shadow-lg outline-none focus:outline-none lg:p-12",
+            "relative mx-auto flex max-h-full w-full max-w-xl flex-col rounded-4xl border-0 bg-white p-8 shadow-lg outline-none focus:outline-none lg:p-12",
             className,
           )}
           role="dialog"

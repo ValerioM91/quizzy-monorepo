@@ -4,7 +4,7 @@ import { useCallback } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import apiClient from "../api-client"
 import DeleteModal from "./ui/DeleteModal"
-import { Question } from "database"
+import { type Question } from "database"
 
 type DeleteQuestionModalProps = {
   closeModal: () => void

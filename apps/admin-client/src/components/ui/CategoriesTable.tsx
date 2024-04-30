@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { PiTrashBold } from "react-icons/pi"
-import { Category } from "database"
+import { type Category } from "database"
 import apiClient from "../../api-client"
 import Button from "./Button"
 import DeleteCategoryModal from "../DeleteCategoryModal"

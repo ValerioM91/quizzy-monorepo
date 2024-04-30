@@ -16,7 +16,7 @@
     "@radix-ui/react-checkbox": "^1.0.4",
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-router": "^1.28.3",
-    "@ts-rest/react-query": "^3.44.0",
+    "@ts-rest/react-query": "^3.45.0",
     "api-contract": "*",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",

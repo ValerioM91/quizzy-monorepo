@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { z } from "zod"
-import { Category } from "database"
+import { type Category } from "database"
 import apiClient from "../api-client"
 import { useFormWithSchema } from "../utils/useFormWithSchema"
 import Input from "./ui/Input"

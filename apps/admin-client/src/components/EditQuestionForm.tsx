@@ -8,7 +8,7 @@ import Modal from "./ui/Modal"
 import { PiNotePencil } from "react-icons/pi"
 import ModalHeader from "./ui/ModalHeader"
 import { QuestionSchema } from "api-contract"
-import { Question } from "database"
+import { type Question } from "database"
 import Label from "./ui/Label"
 
 type EditQuestionForm = {

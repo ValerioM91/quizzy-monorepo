@@ -1,13 +1,13 @@
 import apiClient from "../api-client"
 import { useFormWithSchema } from "../utils/useFormWithSchema"
 import Button from "./ui/Button"
-import { QuestionFromOpenAi } from "../types"
+import { type QuestionFromOpenAi } from "../types"
 import { GenerateWithAISchema } from "api-contract"
 import Select from "./ui/Select"
 import Label from "./ui/Label"
 import Input from "./ui/Input"
 import LoadingBar from "./ui/LoadingBar"
-import { Difficulty } from "database"
+import { type Difficulty } from "database"
 
 const GenerateWithAIForm = ({
   onGenerate,

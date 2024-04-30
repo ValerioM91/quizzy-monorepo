@@ -1,7 +1,7 @@
 import { createLazyFileRoute } from "@tanstack/react-router"
-import { Difficulty } from "database"
+import { type Difficulty } from "database"
 import { useState } from "react"
-import { QuestionFromOpenAi } from "../../types"
+import { type QuestionFromOpenAi } from "../../types"
 import GenerateWithAIForm from "../../components/GenerateWithAIForm"
 import SaveQuestionsForm from "../../components/SaveQuestionsForm"
 

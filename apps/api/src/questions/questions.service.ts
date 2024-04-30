@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 import { z } from 'zod';
 import { QuestionGetQuerySchema } from 'api-contract/dist/schemas';
-import { Prisma } from 'database';
+import { Prisma, Question } from 'database';
 
 @Injectable()
 export class QuestionsService {
@@ -11,10 +11,19 @@ export class QuestionsService {
   async get({
     categoryId,
     difficulty,
+    amount,
   }: z.infer<typeof QuestionGetQuerySchema>) {
-    return await this.prisma.question.findMany({
-      where: { categoryId, difficulty },
-    });
+    try {
+      return (await this.prisma.$queryRaw`
+      SELECT * FROM "Question"
+      WHERE "categoryId" = ${categoryId} AND "difficulty"::text = ${difficulty}
+      ORDER BY random()
+      LIMIT ${amount}
+      `) as Question[];
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
   }
 
   async createMany(questions: Prisma.QuestionCreateManyInput[]) {

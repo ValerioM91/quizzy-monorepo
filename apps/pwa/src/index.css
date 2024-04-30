@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  position: relative;
+  font-family: "Inter Variable", sans-serif;
+  background-color: #3e63dd;
+  color: rgb(58 91 199);
+}
+
+.shadow-1 {
+  @apply shadow-lg shadow-indigo12/50;
+}
+
+.skewed-heading {
+  @apply shadow-1 -skew-y-3 skew-x-6 rounded-3xl bg-white text-4xl font-bold uppercase text-indigo11;
+}
