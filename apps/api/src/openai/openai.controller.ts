@@ -1,7 +1,7 @@
-import { Controller } from '@nestjs/common';
-import { type OpenaiService } from './openai.service';
-import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
-import { contract } from 'api-contract';
+import { Controller } from "@nestjs/common"
+import { type OpenaiService } from "./openai.service"
+import { TsRestHandler, tsRestHandler } from "@ts-rest/nest"
+import { contract } from "api-contract"
 
 @Controller()
 export class OpenaiController {
@@ -12,7 +12,7 @@ export class OpenaiController {
   async handler() {
     return tsRestHandler(contract.openAI, {
       generateMany: async ({ body }) => {
-        const questions = await this.openaiService.generateWithAI(body);
+        const questions = await this.openaiService.generateWithAI(body)
 
         return {
           status: 200,
@@ -21,8 +21,8 @@ export class OpenaiController {
             categoryId: body.categoryId,
             difficulty: body.difficulty,
           },
-        };
+        }
       },
-    });
+    })
   }
 }

@@ -1,7 +1,7 @@
-import { Controller, NotFoundException } from '@nestjs/common';
-import { type CategoriesService } from './categories.service';
-import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
-import { contract } from 'api-contract';
+import { Controller, NotFoundException } from "@nestjs/common"
+import { type CategoriesService } from "./categories.service"
+import { TsRestHandler, tsRestHandler } from "@ts-rest/nest"
+import { contract } from "api-contract"
 
 @Controller()
 export class CategoriesController {
@@ -15,40 +15,40 @@ export class CategoriesController {
         return {
           status: 201,
           body: await this.categoriesService.create(body),
-        };
+        }
       },
       getAll: async () => {
         return {
           status: 200,
           body: await this.categoriesService.getAll(),
-        };
+        }
       },
       patch: async ({ params: { id }, body }) => {
-        const category = await this.categoriesService.get(id);
+        const category = await this.categoriesService.get(id)
 
         if (!category) {
-          throw new NotFoundException('Category not found');
+          throw new NotFoundException("Category not found")
         }
 
         return {
           status: 200,
           body: await this.categoriesService.patch(id, body),
-        };
+        }
       },
       delete: async ({ params: { id } }) => {
-        const category = await this.categoriesService.get(id);
+        const category = await this.categoriesService.get(id)
 
         if (!category) {
-          throw new NotFoundException('Category not found');
+          throw new NotFoundException("Category not found")
         }
 
-        await this.categoriesService.delete(id);
+        await this.categoriesService.delete(id)
 
         return {
           status: 204,
           body: { success: true },
-        };
+        }
       },
-    });
+    })
   }
 }
