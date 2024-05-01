@@ -20,6 +20,7 @@
     "api-contract": "*",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "config": "*",
     "database": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

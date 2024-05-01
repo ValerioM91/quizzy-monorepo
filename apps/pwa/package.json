@@ -30,6 +30,7 @@
     "workbox-strategies": "^7.1.0",
     "zod": "^3.23.5",
     "api-contract": "*",
+    "config": "*",
     "database": "*"
   },
   "devDependencies": {

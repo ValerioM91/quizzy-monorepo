@@ -1,13 +1,14 @@
 import OpenAI from 'openai';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Difficulty } from 'database';
+import { type Difficulty } from 'database';
 import { QuestionCreateSchema } from 'api-contract';
 import { z } from 'zod';
-import { PrismaService } from '../prisma.service';
+import { type PrismaService } from '../prisma.service';
 
 @Injectable()
 export class OpenaiService {
   openAI: OpenAI;
+  // eslint-disable-next-line no-unused-vars
   constructor(private prisma: PrismaService) {
     this.openAI = new OpenAI({
       apiKey: process.env.OPENAI_AI_KEY,

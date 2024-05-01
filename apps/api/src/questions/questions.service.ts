@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
-import { z } from 'zod';
-import { QuestionGetQuerySchema } from 'api-contract/dist/schemas';
-import { Prisma, Question } from 'database';
+import { type PrismaService } from '../prisma.service';
+import { type z } from 'zod';
+import { type QuestionGetQuerySchema } from 'api-contract/dist/schemas';
+import { type Prisma, type Question } from 'database';
 
 @Injectable()
 export class QuestionsService {
+  // eslint-disable-next-line no-unused-vars
   constructor(private prisma: PrismaService) {}
 
   async get({

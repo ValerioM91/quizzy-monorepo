@@ -1,10 +1,11 @@
 import { Controller, NotFoundException } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
+import { type CategoriesService } from './categories.service';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { contract } from 'api-contract';
 
 @Controller()
 export class CategoriesController {
+  // eslint-disable-next-line no-unused-vars
   constructor(private readonly categoriesService: CategoriesService) {}
 
   @TsRestHandler(contract.category)

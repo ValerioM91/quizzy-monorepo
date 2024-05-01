@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma.service';
+import { type PrismaService } from '../prisma.service';
 
 @Injectable()
 export class CategoriesService {
+  // eslint-disable-next-line no-unused-vars
   constructor(private prisma: PrismaService) {}
 
   async get(id: number) {

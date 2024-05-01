@@ -1,10 +1,11 @@
 import { Controller } from '@nestjs/common';
-import { OpenaiService } from './openai.service';
+import { type OpenaiService } from './openai.service';
 import { TsRestHandler, tsRestHandler } from '@ts-rest/nest';
 import { contract } from 'api-contract';
 
 @Controller()
 export class OpenaiController {
+  // eslint-disable-next-line no-unused-vars
   constructor(private readonly openaiService: OpenaiService) {}
 
   @TsRestHandler(contract.openAI)
