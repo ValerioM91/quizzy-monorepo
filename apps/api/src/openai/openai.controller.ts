@@ -1,5 +1,5 @@
 import { Controller } from "@nestjs/common"
-import { type OpenaiService } from "./openai.service"
+import { OpenaiService } from "./openai.service"
 import { TsRestHandler, tsRestHandler } from "@ts-rest/nest"
 import { contract } from "api-contract"
 

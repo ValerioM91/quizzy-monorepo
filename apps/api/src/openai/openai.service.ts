@@ -3,7 +3,7 @@ import { BadRequestException, Injectable } from "@nestjs/common"
 import { type Difficulty } from "database"
 import { QuestionCreateSchema } from "api-contract"
 import { z } from "zod"
-import { type PrismaService } from "../prisma.service"
+import { PrismaService } from "../prisma.service"
 
 @Injectable()
 export class OpenaiService {

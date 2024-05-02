@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common"
-import { type PrismaService } from "../prisma.service"
-import { type z } from "zod"
-import { type QuestionGetQuerySchema } from "api-contract/dist/schemas"
-import { type Prisma, type Question } from "database"
+import { PrismaService } from "../prisma.service"
+import { z } from "zod"
+import { QuestionGetQuerySchema } from "api-contract/dist/schemas"
+import { Prisma, Question } from "database"
 
 @Injectable()
 export class QuestionsService {

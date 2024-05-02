@@ -18,12 +18,5 @@ module.exports = {
     "default-case": "off",
     "arrow-body-style": "off",
     "prefer-arrow-callback": "off",
-    "@typescript-eslint/consistent-type-imports": [
-      "warn",
-      {
-        prefer: "type-imports",
-        fixStyle: "inline-type-imports",
-      },
-    ],
   },
 }

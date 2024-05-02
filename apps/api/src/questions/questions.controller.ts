@@ -1,8 +1,8 @@
 import { BadRequestException, Controller } from "@nestjs/common"
-import { type QuestionsService } from "./questions.service"
+import { QuestionsService } from "./questions.service"
 import { contract } from "api-contract"
 import { TsRestHandler, tsRestHandler } from "@ts-rest/nest"
-import { type CategoriesService } from "../categories/categories.service"
+import { CategoriesService } from "../categories/categories.service"
 
 @Controller()
 export class QuestionsController {

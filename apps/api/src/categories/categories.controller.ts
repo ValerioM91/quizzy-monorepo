@@ -1,5 +1,5 @@
 import { Controller, NotFoundException } from "@nestjs/common"
-import { type CategoriesService } from "./categories.service"
+import { CategoriesService } from "./categories.service"
 import { TsRestHandler, tsRestHandler } from "@ts-rest/nest"
 import { contract } from "api-contract"
 
