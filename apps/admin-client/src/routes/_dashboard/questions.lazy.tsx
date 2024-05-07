@@ -7,12 +7,13 @@ import apiClient from "../../api-client"
 import Select from "../../components/ui/Select"
 import QuestionsTable from "../../components/ui/QuestionsTable"
 import Label from "../../components/ui/Label"
+import { difficultySchema } from "api-contract"
 
 export const Route = createFileRoute("/_dashboard/questions")({
   component: Questions,
   validateSearch: z.object({
     category: z.coerce.string().catch(""),
-    difficulty: z.enum(["easy", "medium", "hard"]).catch("easy"),
+    difficulty: difficultySchema.catch("easy"),
   }),
   onError: () => {},
 })

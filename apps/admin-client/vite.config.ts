@@ -13,6 +13,12 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ["api-contract/**/*"],
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: "globalThis",
+      },
+    },
   },
   server: {
     proxy: {

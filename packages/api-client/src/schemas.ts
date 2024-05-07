@@ -6,7 +6,7 @@ extendZodWithOpenApi(z)
 
 export const requiredString = z.string().min(1, 'This field is required')
 
-export const difficulty = z.nativeEnum(Difficulty)
+export const difficultySchema = z.nativeEnum(Difficulty)
 
 export const QuestionSchema = z.object({
   id: z.number(),
@@ -14,7 +14,7 @@ export const QuestionSchema = z.object({
   correctAnswer: requiredString,
   incorrectAnswers: z.array(requiredString).length(3),
   categoryId: z.number(),
-  difficulty,
+  difficulty: difficultySchema,
 })
 export type Question = z.infer<typeof QuestionSchema>
 
@@ -26,7 +26,7 @@ export const QuestionCreateSchema = QuestionSchema.pick({
 export type QuestionCreate = z.infer<typeof QuestionCreateSchema>
 
 export const QuestionCreateManySchema = z.object({
-  difficulty,
+  difficulty: difficultySchema,
   categoryId: z.number(),
   questions: QuestionCreateSchema.array(),
 })
@@ -39,7 +39,7 @@ export const CategorySchema = z.object({
 
 export const QuestionGetQuerySchema = z.object({
   categoryId: z.coerce.number(),
-  difficulty,
+  difficulty: difficultySchema,
   amount: z.coerce.number(),
 })
 
