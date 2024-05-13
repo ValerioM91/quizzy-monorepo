@@ -81,7 +81,7 @@ export const contract = c.router(
         pathParams: z.object({
           id: z.coerce.number(),
         }),
-        body: QuestionSchema.omit({ id: true }),
+        body: QuestionSchema.omit({ id: true }).partial(),
         responses: {
           200: QuestionSchema,
           404: z.object({

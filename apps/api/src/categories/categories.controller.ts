@@ -12,9 +12,11 @@ export class CategoriesController {
   async handler() {
     return tsRestHandler(contract.category, {
       create: async ({ body }) => {
+        const category = await this.categoriesService.create(body)
+
         return {
           status: 201,
-          body: await this.categoriesService.create(body),
+          body: category,
         }
       },
       getAll: async () => {
