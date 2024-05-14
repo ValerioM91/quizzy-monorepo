@@ -4,7 +4,7 @@ import { AppModule } from "../src/app.module"
 import { PrismaService } from "../src/prisma.service"
 import { prismaMock } from "./prismaMock"
 import { OpenaiService } from "../src/openai/openai.service"
-import { openAIMock } from "./openaiMock"
+import { openAIMock } from "./openAiMock"
 
 export const createAppTestModule = async () => {
   const moduleFixture: TestingModule = await Test.createTestingModule({

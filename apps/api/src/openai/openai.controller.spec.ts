@@ -1,7 +1,7 @@
 import supertest from "supertest"
 import { createAppTestModule } from "../../test/appTestModule"
 import { INestApplication } from "@nestjs/common"
-import { openAIMock } from "../../test/openaiMock"
+import { openAIMock } from "../../test/openAiMock"
 
 describe("OpenaiController", () => {
   let app: Awaited<INestApplication["getHttpAdapter"]>
