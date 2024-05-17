@@ -5,7 +5,7 @@
   "type": "module",
   "prettier": "config/.prettierrc.json",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 5174",
     "build": "tsc && vite build",
     "lint": "eslint ./src --ext ts,tsx",
     "preview": "vite preview",
