@@ -25,9 +25,11 @@ const QuestionsTable = ({ questions }: QuestionsTable) => {
           </tr>
         </thead>
         <tbody className={tableClasses.tBody}>
-          {questions.map(question => (
-            <TableRow key={question.id} {...question} />
-          ))}
+          {questions
+            .sort((a, b) => a.question.localeCompare(b.question))
+            .map(question => (
+              <TableRow key={question.id} {...question} />
+            ))}
         </tbody>
       </table>
     </div>

@@ -1,13 +1,13 @@
 import { initContract } from '@ts-rest/core'
+import { z } from 'zod'
 import {
   CategorySchema,
   GenerateWithAISchema,
   QuestionCreateManySchema,
-  QuestionCreateSchema,
   QuestionGetQuerySchema,
   QuestionSchema,
 } from './schemas'
-import { z } from 'zod'
+import { generateOpenApi } from '@ts-rest/open-api'
 
 const c = initContract()
 
@@ -81,7 +81,7 @@ export const contract = c.router(
         pathParams: z.object({
           id: z.coerce.number(),
         }),
-        body: QuestionSchema.omit({ id: true }),
+        body: QuestionSchema.omit({ id: true }).partial(),
         responses: {
           200: QuestionSchema,
           404: z.object({
@@ -122,3 +122,10 @@ export const contract = c.router(
 )
 
 export * from './schemas'
+
+export const openApiDocument = generateOpenApi(contract, {
+  info: {
+    title: 'Quizzy API',
+    version: '1.0.0',
+  },
+})

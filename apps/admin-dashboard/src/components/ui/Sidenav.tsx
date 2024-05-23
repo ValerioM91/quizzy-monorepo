@@ -1,4 +1,4 @@
-import Link from "../ui/Link"
+import Link from "./Link"
 import { cn } from "../../utils/cn"
 import { type IconType } from "react-icons"
 import { BiCategory, BiQuestionMark } from "react-icons/bi"
