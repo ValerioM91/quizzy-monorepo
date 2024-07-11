@@ -43,7 +43,29 @@ export default {
         "theme-violet-light": "#63608A",
         "theme-yellow": "#F8D849",
       },
+      animation: {
+        enter: "fadeInRight 300ms ease-out",
+        leave: "fadeOutLeft 300ms ease-in forwards",
+      },
       keyframes: {
+        fadeInRight: {
+          "0%": {
+            opacity: "0",
+            transform: "translate(2rem)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translate(0)",
+          },
+        },
+        fadeOutLeft: {
+          "0%": {
+            opacity: "1",
+          },
+          "100%": {
+            opacity: "0",
+          },
+        },
         "left-to-right": {
           "0%": {
             transform: "translateX(-150%)",
@@ -55,5 +77,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config
