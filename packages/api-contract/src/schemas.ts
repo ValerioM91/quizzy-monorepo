@@ -10,9 +10,12 @@ export const difficultySchema = z.nativeEnum(Difficulty)
 
 export const QuestionSchema = z.object({
   id: z.number(),
-  question: requiredString,
-  correctAnswer: requiredString,
-  incorrectAnswers: z.array(requiredString).length(3),
+  question: requiredString.describe('A question to ask the user during the game'),
+  correctAnswer: requiredString.describe('The correct answer to the question'),
+  incorrectAnswers: z
+    .array(requiredString)
+    .length(3)
+    .describe('Incorrect answers to display to the user'),
   categoryId: z.number(),
   difficulty: difficultySchema,
 })

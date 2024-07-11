@@ -1,8 +1,11 @@
-import OpenAI from "openai"
 import { BadRequestException, Injectable } from "@nestjs/common"
-import { type Difficulty } from "database"
-import { QuestionCreateSchema } from "api-contract"
+import OpenAI from "openai"
 import { z } from "zod"
+import zodToJsonSchema from "zod-to-json-schema"
+
+import { QuestionCreateSchema } from "api-contract"
+import { type Difficulty } from "database"
+
 import { PrismaService } from "../prisma.service"
 
 @Injectable()
@@ -35,6 +38,10 @@ export class OpenaiService {
       where: { difficulty, categoryId },
     })
 
+    const schema = z.object({ questions: QuestionCreateSchema.array() })
+
+    const jsonSchema = zodToJsonSchema(schema)
+
     const response = await this.openAI.chat.completions.create({
       model: "gpt-4",
       temperature: 1,
@@ -49,35 +56,7 @@ export class OpenaiService {
           type: "function",
           function: {
             name: "submit_findings",
-            parameters: {
-              type: "object",
-              properties: {
-                questions: {
-                  type: "array",
-                  items: {
-                    type: "object",
-                    properties: {
-                      question: {
-                        type: "string",
-                        description: "A question to ask the user during the game",
-                      },
-                      correctAnswer: {
-                        type: "string",
-                        description: "The correct answer to the question",
-                      },
-                      incorrectAnswers: {
-                        type: "array",
-                        items: {
-                          type: "string",
-                        },
-                        description: "Incorrect answers to display to the user",
-                      },
-                    },
-                    required: ["name", "correctAnswer", "incorrectAnswers"],
-                  },
-                },
-              },
-            },
+            parameters: jsonSchema,
           },
         },
       ],
@@ -103,7 +82,7 @@ export class OpenaiService {
       throw new BadRequestException("No response from OpenAI")
     }
 
-    const { questions } = z.object({ questions: QuestionCreateSchema.array() }).parse(JSON.parse(rawJson))
+    const { questions } = schema.parse(JSON.parse(rawJson))
 
     return questions
   }
