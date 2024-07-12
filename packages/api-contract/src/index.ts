@@ -4,6 +4,7 @@ import {
   CategorySchema,
   GenerateWithAISchema,
   QuestionCreateManySchema,
+  QuestionGetPaginatedQuerySchema,
   QuestionGetQuerySchema,
   QuestionSchema,
 } from './schemas'
@@ -65,6 +66,17 @@ export const contract = c.router(
         query: QuestionGetQuerySchema,
         responses: {
           200: QuestionSchema.array(),
+        },
+      },
+      getPaginated: {
+        method: 'GET',
+        path: '/questions-paginated',
+        query: QuestionGetPaginatedQuerySchema,
+        responses: {
+          200: z.object({
+            totalPages: z.number(),
+            questions: QuestionSchema.array(),
+          }),
         },
       },
       createMany: {

@@ -24,6 +24,14 @@ export class QuestionsController {
         }
       },
 
+      // TODO: Implement admin-only protected route
+      getPaginated: async ({ query }) => {
+        return {
+          status: 200,
+          body: await this.questionsService.getPaginated(query),
+        }
+      },
+
       createMany: async ({ body }) => {
         const category = await this.categoriesService.get(body.categoryId)
 

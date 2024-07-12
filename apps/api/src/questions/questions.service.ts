@@ -23,6 +23,26 @@ export class QuestionsService {
     }
   }
 
+  async getPaginated({ categoryId, difficulty, page, take = 20 }) {
+    const totalPages = Math.ceil(
+      (await this.prisma.question.count({
+        where: { categoryId, difficulty },
+      })) / take,
+    )
+
+    const questions = await this.prisma.question.findMany({
+      where: { categoryId, difficulty },
+      orderBy: { id: "asc" },
+      skip: (page - 1) * 20,
+      take,
+    })
+
+    return {
+      totalPages,
+      questions,
+    }
+  }
+
   async createMany(questions: Prisma.QuestionCreateManyInput[]) {
     return await this.prisma.question.createMany({ data: questions })
   }

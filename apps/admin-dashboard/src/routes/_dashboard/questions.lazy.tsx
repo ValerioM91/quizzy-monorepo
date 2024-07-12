@@ -8,26 +8,29 @@ import Select from "../../components/ui/Select"
 import QuestionsTable from "../../components/ui/QuestionsTable"
 import Label from "../../components/ui/Label"
 import { difficultySchema } from "api-contract"
+import Pagination from "../../components/ui/Pagination"
 
 export const Route = createFileRoute("/_dashboard/questions")({
   component: Questions,
   validateSearch: z.object({
     category: z.coerce.string().catch(""),
     difficulty: difficultySchema.catch("easy"),
+    page: z.coerce.number().min(1).optional(),
   }),
   onError: () => {},
 })
 
 function Questions() {
   const navigate = useNavigate({ from: Route.fullPath })
-  const { category, difficulty } = Route.useSearch()
+  const { category, difficulty, page = 1 } = Route.useSearch()
 
   const { data: categories } = apiClient.category.getAll.useQuery(["category.getAll"])
-  const { data } = apiClient.questions.get.useQuery(
-    ["questions.get", +category, difficulty],
-    { query: { categoryId: +category, difficulty, amount: Infinity } },
+  const { data } = apiClient.questions.getPaginated.useQuery(
+    ["questions.get", +category, difficulty, page],
+    { query: { categoryId: +category, difficulty, page } },
     { enabled: !!category && +category > 0 && !!difficulty },
   )
+  const { questions, totalPages } = data?.body || {}
 
   const handleChange = ({
     name,
@@ -79,7 +82,12 @@ function Questions() {
         </div>
       </div>
 
-      {data && <QuestionsTable questions={data.body} />}
+      {questions && <QuestionsTable questions={questions} />}
+      {totalPages && totalPages > 1 ? (
+        <div className="my-8 flex items-center justify-center">
+          <Pagination currentPage={page} totalPages={totalPages} />
+        </div>
+      ) : null}
     </div>
   )
 }
