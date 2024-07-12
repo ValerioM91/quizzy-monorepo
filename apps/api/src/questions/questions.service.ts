@@ -3,11 +3,16 @@ import { PrismaService } from "../prisma.service"
 import { z } from "zod"
 import { QuestionGetQuerySchema } from "api-contract/dist/schemas"
 import { Prisma, Question } from "database"
+import { VectorService } from "../vector.service"
 
 @Injectable()
 export class QuestionsService {
-  // eslint-disable-next-line no-unused-vars
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    // eslint-disable-next-line no-unused-vars
+    private prisma: PrismaService,
+    // eslint-disable-next-line no-unused-vars
+    private vectorService: VectorService,
+  ) {}
 
   async get({ categoryId, difficulty, amount }: z.infer<typeof QuestionGetQuerySchema>) {
     try {
@@ -44,14 +49,28 @@ export class QuestionsService {
   }
 
   async createMany(questions: Prisma.QuestionCreateManyInput[]) {
-    return await this.prisma.question.createMany({ data: questions })
+    const results = await this.prisma.question.createManyAndReturn({ data: questions })
+
+    results.forEach(async question => {
+      this.vectorService.addItem(question)
+    })
+
+    return results
+  }
+
+  async querySimilar({ text, categoryId }: { text: string; categoryId: number }) {
+    return this.vectorService.querySimilar(text, categoryId)
   }
 
   async patch(id: number, question: Prisma.QuestionUpdateInput) {
-    return await this.prisma.question.update({ where: { id }, data: question })
+    const updated = await this.prisma.question.update({ where: { id }, data: question })
+    this.vectorService.updateItem(updated)
+    return updated
   }
 
   async delete(id: number) {
-    return await this.prisma.question.delete({ where: { id } })
+    const deleted = await this.prisma.question.delete({ where: { id } })
+    this.vectorService.deleteItem(id)
+    return deleted
   }
 }

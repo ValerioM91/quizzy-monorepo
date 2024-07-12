@@ -1,11 +1,13 @@
 {
+  "name": "quizzy-monorepo",
   "devDependencies": {
-    "turbo": "^1.13.3"
+    "turbo": "^2.0.6"
   },
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
+  "packageManager": "npm@10.7.0",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",

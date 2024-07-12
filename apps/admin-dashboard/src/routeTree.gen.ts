@@ -23,6 +23,9 @@ const DashboardGenerateLazyImport = createFileRoute('/_dashboard/generate')()
 const DashboardCategoriesLazyImport = createFileRoute(
   '/_dashboard/categories',
 )()
+const DashboardAddQuestionLazyImport = createFileRoute(
+  '/_dashboard/add-question',
+)()
 
 // Create/Update Routes
 
@@ -57,6 +60,13 @@ const DashboardCategoriesLazyRoute = DashboardCategoriesLazyImport.update({
   import('./routes/_dashboard/categories.lazy').then((d) => d.Route),
 )
 
+const DashboardAddQuestionLazyRoute = DashboardAddQuestionLazyImport.update({
+  path: '/add-question',
+  getParentRoute: () => DashboardRoute,
+} as any).lazy(() =>
+  import('./routes/_dashboard/add-question.lazy').then((d) => d.Route),
+)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -68,6 +78,10 @@ declare module '@tanstack/react-router' {
     '/_dashboard': {
       preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
+    }
+    '/_dashboard/add-question': {
+      preLoaderRoute: typeof DashboardAddQuestionLazyImport
+      parentRoute: typeof DashboardImport
     }
     '/_dashboard/categories': {
       preLoaderRoute: typeof DashboardCategoriesLazyImport
@@ -89,6 +103,7 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren([
   IndexLazyRoute,
   DashboardRoute.addChildren([
+    DashboardAddQuestionLazyRoute,
     DashboardCategoriesLazyRoute,
     DashboardGenerateLazyRoute,
     DashboardQuestionsLazyRoute,

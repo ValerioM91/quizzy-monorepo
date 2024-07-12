@@ -32,6 +32,29 @@ export class QuestionsController {
         }
       },
 
+      querySimilar: async ({ query }) => {
+        const results = await this.questionsService.querySimilar(query)
+        return {
+          status: 200,
+          body: results,
+        }
+      },
+
+      create: async ({ body }) => {
+        const category = await this.categoriesService.get(body.categoryId)
+
+        if (!category) {
+          throw new BadRequestException("Category not found")
+        }
+
+        const [question] = await this.questionsService.createMany([body])
+
+        return {
+          status: 201,
+          body: question,
+        }
+      },
+
       createMany: async ({ body }) => {
         const category = await this.categoriesService.get(body.categoryId)
 

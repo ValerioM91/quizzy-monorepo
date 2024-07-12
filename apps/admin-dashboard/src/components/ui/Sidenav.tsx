@@ -13,6 +13,7 @@ const LINKS: {
 }[] = [
   { name: "Categories", path: "/categories", icon: BiCategory },
   { name: "Questions", path: "/questions", icon: BiQuestionMark },
+  { name: "Add question", path: "/add-question", icon: BiQuestionMark },
   { name: "Generate with AI", path: "/generate", icon: GiArtificialIntelligence },
 ]
 

@@ -21,17 +21,17 @@ export const QuestionSchema = z.object({
 })
 export type Question = z.infer<typeof QuestionSchema>
 
-export const QuestionCreateSchema = QuestionSchema.pick({
-  question: true,
-  correctAnswer: true,
-  incorrectAnswers: true,
-})
+export const QuestionCreateSchema = QuestionSchema.omit({ id: true })
 export type QuestionCreate = z.infer<typeof QuestionCreateSchema>
 
 export const QuestionCreateManySchema = z.object({
   difficulty: difficultySchema,
   categoryId: z.number(),
-  questions: QuestionCreateSchema.array(),
+  questions: QuestionSchema.pick({
+    question: true,
+    correctAnswer: true,
+    incorrectAnswers: true,
+  }).array(),
 })
 export type QuestionCreateMany = z.infer<typeof QuestionCreateManySchema>
 

@@ -4,6 +4,7 @@ import {
   CategorySchema,
   GenerateWithAISchema,
   QuestionCreateManySchema,
+  QuestionCreateSchema,
   QuestionGetPaginatedQuerySchema,
   QuestionGetQuerySchema,
   QuestionSchema,
@@ -79,12 +80,38 @@ export const contract = c.router(
           }),
         },
       },
-      createMany: {
+      create: {
         method: 'POST',
         path: '/questions',
+        body: QuestionCreateSchema,
+        responses: {
+          201: QuestionSchema,
+        },
+      },
+      createMany: {
+        method: 'POST',
+        path: '/questions-many',
         body: QuestionCreateManySchema,
         responses: {
           201: z.object({ success: z.boolean() }),
+        },
+      },
+      querySimilar: {
+        method: 'GET',
+        path: '/questions-similar',
+        query: z.object({
+          text: z.string(),
+          categoryId: z.coerce.number(),
+        }),
+        responses: {
+          200: z
+            .object({
+              question: z.string(),
+              id: z.number(),
+              categoryId: z.number(),
+              score: z.number(),
+            })
+            .array(),
         },
       },
       patch: {
