@@ -77,6 +77,7 @@ export const contract = c.router(
           200: z.object({
             totalPages: z.number(),
             questions: QuestionSchema.array(),
+            totalQuestions: z.number(),
           }),
         },
       },

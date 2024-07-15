@@ -1,7 +1,7 @@
 import Link from "./Link"
 import { cn } from "../../utils/cn"
 import { type IconType } from "react-icons"
-import { BiCategory, BiQuestionMark } from "react-icons/bi"
+import { BiCategory, BiQuestionMark, BiSolidMessageAdd } from "react-icons/bi"
 import { GiArtificialIntelligence } from "react-icons/gi"
 import { SIDENAV_INPUT_ID } from "../../config"
 import { useRouterState } from "@tanstack/react-router"
@@ -13,7 +13,7 @@ const LINKS: {
 }[] = [
   { name: "Categories", path: "/categories", icon: BiCategory },
   { name: "Questions", path: "/questions", icon: BiQuestionMark },
-  { name: "Add question", path: "/add-question", icon: BiQuestionMark },
+  { name: "Add question", path: "/add-question", icon: BiSolidMessageAdd },
   { name: "Generate with AI", path: "/generate", icon: GiArtificialIntelligence },
 ]
 

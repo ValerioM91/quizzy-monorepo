@@ -19,8 +19,8 @@ const badgeVariants = cva(
 
 export type BadgeProps = React.HTMLAttributes<HTMLDivElement> & VariantProps<typeof badgeVariants>
 
-function Badge({ className, colorSchema, ...props }: BadgeProps) {
+export const Badge = ({ className, colorSchema, ...props }: BadgeProps) => {
   return <div className={cn(badgeVariants({ colorSchema }), className)} {...props} />
 }
 
-export { Badge, badgeVariants }
+export default Badge

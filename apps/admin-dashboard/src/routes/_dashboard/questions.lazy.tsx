@@ -30,7 +30,7 @@ function Questions() {
     { query: { categoryId: +category, difficulty, page } },
     { enabled: !!category && +category > 0 && !!difficulty },
   )
-  const { questions, totalPages } = data?.body || {}
+  const { questions, totalPages, totalQuestions } = data?.body || {}
 
   const handleChange = ({
     name,
@@ -82,6 +82,11 @@ function Questions() {
         </div>
       </div>
 
+      {totalQuestions && totalQuestions > 0 ? (
+        <p className="mb-4 text-right text-sm text-content-neutral">
+          Showing {questions?.length} of {totalQuestions} questions
+        </p>
+      ) : null}
       {questions && <QuestionsTable questions={questions} />}
       {totalPages && totalPages > 1 ? (
         <div className="my-8 flex items-center justify-center">

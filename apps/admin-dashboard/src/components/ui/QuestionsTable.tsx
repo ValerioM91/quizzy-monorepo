@@ -17,7 +17,7 @@ const QuestionsTable = ({ questions }: QuestionsTable) => {
       <table className={tableClasses.table}>
         <thead>
           <tr className={tableClasses.trHead}>
-            <th className="px-4">Question ({questions.length})</th>
+            <th className="px-4">Question</th>
             <th className="px-4">correct answer</th>
             <th className="px-4">incorrect answers</th>
             <th className={tableClasses.thButton}></th>
