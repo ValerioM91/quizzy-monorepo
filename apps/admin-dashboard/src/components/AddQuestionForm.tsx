@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react"
 import { PiX } from "react-icons/pi"
+import { CgSpinner } from "react-icons/cg"
 import { useQueryClient } from "@tanstack/react-query"
 import { useNavigate } from "@tanstack/react-router"
 
@@ -47,6 +48,8 @@ const AddQuestionForm = () => {
 
   const [similarQuestions, setSimilarQuestions] = useState<string[] | null>(null)
   const closeModal = useCallback(() => setSimilarQuestions(null), [])
+
+  const [isSearching, setIsSearching] = useState(false)
 
   useEffect(() => {
     setValue("incorrectAnswers", incorrectAnswers)
@@ -172,7 +175,7 @@ const AddQuestionForm = () => {
         <InputErrorMessage errorMessage={errors.incorrectAnswers?.message} />
       </div>
 
-      <div className="flex flex-wrap justify-between gap-4">
+      <div className="flex flex-wrap justify-between gap-4 transition-all">
         <Button
           type="button"
           disabled={!category || !inputQuestion}
@@ -180,14 +183,17 @@ const AddQuestionForm = () => {
             e.stopPropagation()
             const question = getValues("question")
             const categoryId = getValues("categoryId")
+            setIsSearching(true)
             const res = await apiClient.questions.querySimilar.query({ query: { categoryId, text: question } })
 
             if (res.status === 200) {
               setSimilarQuestions(res.body.map(q => q.question))
             }
+            setIsSearching(false)
           }}
+          isSubmitting={isSearching}
         >
-          Check similar questions
+          Check similar questions{isSearching && <CgSpinner className="ml-2 animate-spin" />}
         </Button>
         <Button disabled={isLoading} type="submit" colorSchema="purple">
           Save

@@ -92,7 +92,7 @@ const StartScreen = () => {
         <Link
           to="/game"
           variant="amber"
-          search={{ amount, category, difficulty: "easy" }}
+          search={{ amount, category, difficulty }}
           className={cn("mt-6 skew-x-6 uppercase", selectOpen ? "pointer-events-none" : "pointer-events-auto")}
         >
           <span className="-skew-x-6">Start Game</span>

@@ -12,6 +12,7 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "start": "turbo run start",
+    "db:generate": "turbo run db:generate",
     "tsc-lint": "turbo run tsc-lint",
     "test": "turbo run test",
     "ci:test": "turbo run tsc-lint && turbo run test"
