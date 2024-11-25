@@ -9,7 +9,6 @@
     "build": "tsc && vite build",
     "lint": "eslint ./src --ext ts,tsx",
     "preview": "vite preview",
-    "start": "vite preview",
     "tsc-lint": "tsc && npm run lint"
   },
   "dependencies": {

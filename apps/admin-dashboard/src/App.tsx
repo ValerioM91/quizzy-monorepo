@@ -18,7 +18,7 @@ declare module "@tanstack/react-router" {
 function App() {
   return (
     <StrictMode>
-      <RouterProvider router={router} />
+      <RouterProvider router={router} basepath="/admin" />
       <Toaster />
     </StrictMode>
   )

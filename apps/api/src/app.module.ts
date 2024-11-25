@@ -8,9 +8,16 @@ import { CategoriesModule } from "./categories/categories.module"
 
 @Module({
   imports: [
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "..", "admin-client"),
-    }),
+    ServeStaticModule.forRoot(
+      {
+        rootPath: join(__dirname, "../../../", "admin-dashboard/dist"),
+        serveRoot: "/admin",
+      },
+      {
+        rootPath: join(__dirname, "../../../", "pwa/dist"),
+        exclude: ["/admin"],
+      },
+    ),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env`,

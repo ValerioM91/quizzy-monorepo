@@ -2,6 +2,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router"
 import SidenavToggle from "../components/ui/SidenavToggle"
 import { SIDENAV_INPUT_ID } from "../config"
 import SideNav from "../components/ui/Sidenav"
+import { HiBars3 } from "react-icons/hi2"
 
 export const Route = createFileRoute("/_dashboard")({
   component: () => (
@@ -12,16 +13,16 @@ export const Route = createFileRoute("/_dashboard")({
         <label
           htmlFor={SIDENAV_INPUT_ID}
           aria-label="close sidebar"
-          className="fixed inset-0 z-10 hidden cursor-pointer self-stretch bg-transparent transition-all peer-checked:block peer-checked:bg-black/20 md:hidden"
+          className="fixed inset-0 z-50 hidden cursor-pointer self-stretch bg-transparent transition-all peer-checked:block peer-checked:bg-black/5 md:hidden"
         />
         <div className="flex h-10 justify-end border-b p-2 px-4 text-sm sm:text-xl md:hidden">
           <label htmlFor={SIDENAV_INPUT_ID} aria-label="open sidebar" className="text-2xl">
-            HEY
+            <HiBars3 />
           </label>
         </div>
       </div>
 
-      <div className="flex h-[100%] flex-col overflow-y-hidden">
+      <div className="flex h-[calc(100%-2.5rem)] flex-col overflow-y-hidden md:h-[100%]">
         <div className="overflow-auto pb-5 pt-10">
           <div className="mx-auto max-w-screen-2xl">
             <Outlet />
