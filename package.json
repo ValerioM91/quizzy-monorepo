@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "start": "turbo run start",
     "tsc-lint": "turbo run tsc-lint",
     "test": "turbo run test",
     "ci:test": "turbo run tsc-lint && turbo run test"

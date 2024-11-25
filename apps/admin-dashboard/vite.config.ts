@@ -11,6 +11,11 @@ export default defineConfig({
       plugins: [commonjs()],
     },
   },
+  resolve: {
+    alias: {
+      ".prisma/client/index-browser": "../../node_modules/.prisma/client/index-browser.js",
+    },
+  },
   optimizeDeps: {
     include: ["api-contract/**/*"],
     esbuildOptions: {

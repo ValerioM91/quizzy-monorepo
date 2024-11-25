@@ -7,9 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "start": "vite preview",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
-    "tsc-lint": "tsc && npm run lint",
-    "preview": "vite preview"
+    "tsc-lint": "tsc && npm run lint"
   },
   "dependencies": {
     "@fontsource/inter": "^5.0.17",
