@@ -5,16 +5,17 @@ import Main from "../components/Main"
 import Link from "../components/Link"
 import { cn } from "../utils/cn"
 import apiClient from "../api-client"
-import { type Difficulty } from "database"
+import type { Difficulty } from "database"
 
 const StartScreen = () => {
-  const [category, setCategory] = useState<number>()
+  const [category, setCategory] = useState<string>()
   const [amount, setAmount] = useState(10)
   const [selectOpen, setSelectOpen] = useState(false)
   const [difficulty, setDifficulty] = useState<Difficulty>()
 
   const { data: categories } = apiClient.category.getAll.useQuery(["category.getAll"], undefined, {
     staleTime: 1000 * 60 * 60,
+    queryKey: ["category.getAll"],
   })
 
   return (
@@ -29,7 +30,7 @@ const StartScreen = () => {
           >
             <span className="inline-block -skew-x-6">Select a category</span>
           </Label>
-          <Select name="category" onValueChange={val => setCategory(+val)} onOpenChange={open => setSelectOpen(open)}>
+          <Select name="category" onValueChange={val => setCategory(val)} onOpenChange={open => setSelectOpen(open)}>
             <SelectTrigger id="category" className="capitalize" aria-label="Category">
               <SelectValue placeholder="Select category" className="placeholder:text-red-600" />
             </SelectTrigger>

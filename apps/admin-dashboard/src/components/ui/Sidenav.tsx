@@ -4,11 +4,11 @@ import { type IconType } from "react-icons"
 import { BiCategory, BiQuestionMark, BiSolidMessageAdd } from "react-icons/bi"
 import { GiArtificialIntelligence } from "react-icons/gi"
 import { SIDENAV_INPUT_ID } from "../../config"
-import { useRouterState } from "@tanstack/react-router"
+import { type LinkProps, useRouterState } from "@tanstack/react-router"
 
 const LINKS: {
   name: string
-  path: string
+  path: LinkProps["to"]
   icon: IconType
 }[] = [
   { name: "Categories", path: "/categories", icon: BiCategory },

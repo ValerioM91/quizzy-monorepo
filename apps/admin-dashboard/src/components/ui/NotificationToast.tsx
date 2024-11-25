@@ -4,12 +4,13 @@ import Link from "./Link"
 import Button from "./Button"
 import { IoCheckmarkCircleOutline, IoAlertCircleOutline } from "react-icons/io5"
 import { cn } from "../../utils/cn"
+import type { LinkProps } from "@tanstack/react-router"
 
 export type NotificationToastProps = {
   toastElement: Toast
   title: string
   content?: string | React.ReactNode
-  link?: string
+  link?: LinkProps["to"]
   error?: boolean
 }
 
