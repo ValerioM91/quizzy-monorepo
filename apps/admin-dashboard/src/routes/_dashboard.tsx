@@ -2,7 +2,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router"
 import SidenavToggle from "../components/ui/SidenavToggle"
 import { SIDENAV_INPUT_ID } from "../config"
 import SideNav from "../components/ui/Sidenav"
-import { HiBars3 } from "react-icons/hi2"
+import { FaBars } from "react-icons/fa6"
 
 export const Route = createFileRoute("/_dashboard")({
   component: () => (
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/_dashboard")({
         />
         <div className="flex h-10 justify-end border-b p-2 px-4 text-sm sm:text-xl md:hidden">
           <label htmlFor={SIDENAV_INPUT_ID} aria-label="open sidebar" className="text-2xl">
-            <HiBars3 />
+            <FaBars />
           </label>
         </div>
       </div>

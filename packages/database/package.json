@@ -4,9 +4,9 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "main": "./index.ts",
   "scripts": {
     "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push --skip-generate",
     "build": "tsc"
   },

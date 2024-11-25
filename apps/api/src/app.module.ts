@@ -5,6 +5,7 @@ import { join } from "path"
 import { OpenaiModule } from "./openai/openai.module"
 import { QuestionsModule } from "./questions/questions.module"
 import { CategoriesModule } from "./categories/categories.module"
+import { UsersModule } from "./users/users.module"
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { CategoriesModule } from "./categories/categories.module"
       isGlobal: true,
       envFilePath: `.env`,
     }),
+    UsersModule,
     CategoriesModule,
     QuestionsModule,
     OpenaiModule,

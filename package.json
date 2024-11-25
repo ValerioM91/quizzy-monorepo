@@ -13,6 +13,7 @@
     "build": "turbo run build",
     "start": "turbo run start",
     "db:generate": "turbo run db:generate",
+    "db:migrate": "prisma migrate dev",
     "tsc-lint": "turbo run tsc-lint",
     "test": "turbo run test",
     "ci:test": "turbo run tsc-lint && turbo run test"

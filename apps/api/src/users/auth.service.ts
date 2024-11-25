@@ -12,7 +12,6 @@ export class AuthService {
     if (existingUser) {
       throw new BadRequestException("Email already in use")
     }
-
     const result = await hashPassword(password)
 
     const user = await this.usersService.create({ email, password: result })

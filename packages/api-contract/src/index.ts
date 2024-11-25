@@ -3,6 +3,7 @@ import { z } from 'zod'
 import {
   CategorySchema,
   GenerateWithAISchema,
+  LoginSchema,
   QuestionCreateManySchema,
   QuestionCreateSchema,
   QuestionGetPaginatedQuerySchema,
@@ -15,6 +16,32 @@ const c = initContract()
 
 export const contract = c.router(
   {
+    authentication: {
+      login: {
+        method: 'POST',
+        path: '/login',
+        body: LoginSchema,
+        responses: {
+          200: z.object({
+            user: z.object({
+              id: z.number(),
+              email: z.string(),
+            }),
+          }),
+          404: z.object({
+            message: z.string(),
+          }),
+        },
+      },
+      logout: {
+        method: 'POST',
+        path: '/logout',
+        body: z.object({}),
+        responses: {
+          200: z.object({ success: z.boolean() }),
+        },
+      },
+    },
     category: {
       getAll: {
         method: 'GET',

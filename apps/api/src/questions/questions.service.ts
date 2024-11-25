@@ -16,12 +16,12 @@ export class QuestionsService {
 
   async get({ categoryId, difficulty, amount }: z.infer<typeof QuestionGetQuerySchema>) {
     try {
-      return (await this.prisma.$queryRaw`
+      return await this.prisma.$queryRaw<Question[]>`
       SELECT * FROM "Question"
       WHERE "categoryId" = ${categoryId} AND "difficulty"::text = ${difficulty}
       ORDER BY random()
       LIMIT ${amount}
-      `) as Question[]
+      `
     } catch (e) {
       console.error(e)
       throw e
