@@ -1,11 +1,12 @@
-import { Module } from "@nestjs/common"
+import { MiddlewareConsumer, Module } from "@nestjs/common"
 import { ServeStaticModule } from "@nestjs/serve-static"
-import { ConfigModule } from "@nestjs/config"
+import { ConfigModule, ConfigService } from "@nestjs/config"
 import { join } from "path"
 import { OpenaiModule } from "./openai/openai.module"
 import { QuestionsModule } from "./questions/questions.module"
 import { CategoriesModule } from "./categories/categories.module"
 import { UsersModule } from "./users/users.module"
+import cookieSession from "cookie-session"
 
 @Module({
   imports: [
@@ -29,4 +30,21 @@ import { UsersModule } from "./users/users.module"
     OpenaiModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+  // eslint-disable-next-line no-unused-vars
+  constructor(private configService: ConfigService) {}
+
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(
+        cookieSession({
+          maxAge: 24 * 60 * 60 * 1000,
+          // secure: true,
+          // signed: true,
+          // httpOnly: true,
+          keys: [this.configService.get("COOKIE_KEY")],
+        }),
+      )
+      .forRoutes("*")
+  }
+}

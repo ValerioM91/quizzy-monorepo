@@ -18,6 +18,9 @@
     "db:push": {
       "cache": false
     },
+    "db:pull": {
+      "cache": false
+    },
     "tsc-lint": {
       "cache": false
     },

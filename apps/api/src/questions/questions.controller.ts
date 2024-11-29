@@ -1,8 +1,9 @@
-import { BadRequestException, Controller } from "@nestjs/common"
+import { BadRequestException, Controller, UseGuards } from "@nestjs/common"
 import { QuestionsService } from "./questions.service"
 import { contract } from "api-contract"
 import { TsRestHandler, tsRestHandler } from "@ts-rest/nest"
 import { CategoriesService } from "../categories/categories.service"
+import { AuthGuard } from "../guards/auth.guard"
 
 @Controller()
 export class QuestionsController {
@@ -13,88 +14,108 @@ export class QuestionsController {
     private readonly categoriesService: CategoriesService,
   ) {}
 
-  @TsRestHandler(contract.questions)
-  async handler() {
-    return tsRestHandler(contract.questions, {
-      get: async ({ query }) => {
-        const questions = await this.questionsService.get(query)
-        return {
-          status: 200,
-          body: questions,
-        }
-      },
+  @TsRestHandler(contract.questions.get)
+  async get() {
+    return tsRestHandler(contract.questions.get, async ({ query }) => {
+      const questions = await this.questionsService.get(query)
+      return {
+        status: 200,
+        body: questions,
+      }
+    })
+  }
 
-      // TODO: Implement admin-only protected route
-      getPaginated: async ({ query }) => {
-        return {
-          status: 200,
-          body: await this.questionsService.getPaginated(query),
-        }
-      },
+  @TsRestHandler(contract.questions.getPaginated)
+  @UseGuards(AuthGuard)
+  async getPaginated() {
+    return tsRestHandler(contract.questions.getPaginated, async ({ query }) => {
+      return {
+        status: 200,
+        body: await this.questionsService.getPaginated(query),
+      }
+    })
+  }
 
-      querySimilar: async ({ query }) => {
-        const results = await this.questionsService.querySimilar(query)
-        return {
-          status: 200,
-          body: results,
-        }
-      },
+  @TsRestHandler(contract.questions.querySimilar)
+  @UseGuards(AuthGuard)
+  async querySimilar() {
+    return tsRestHandler(contract.questions.querySimilar, async ({ query }) => {
+      const results = await this.questionsService.querySimilar(query)
+      return {
+        status: 200,
+        body: results,
+      }
+    })
+  }
 
-      create: async ({ body }) => {
-        const category = await this.categoriesService.get(body.categoryId)
+  @TsRestHandler(contract.questions.create)
+  @UseGuards(AuthGuard)
+  async create() {
+    return tsRestHandler(contract.questions.create, async ({ body }) => {
+      const category = await this.categoriesService.get(body.categoryId)
+      if (!category) {
+        throw new BadRequestException("Category not found")
+      }
 
-        if (!category) {
-          throw new BadRequestException("Category not found")
-        }
+      const [question] = await this.questionsService.createMany([body])
 
-        const [question] = await this.questionsService.createMany([body])
+      return {
+        status: 201,
+        body: question,
+      }
+    })
+  }
 
-        return {
-          status: 201,
-          body: question,
-        }
-      },
+  @TsRestHandler(contract.questions.createMany)
+  @UseGuards(AuthGuard)
+  async createMany() {
+    return tsRestHandler(contract.questions.createMany, async ({ body }) => {
+      const category = await this.categoriesService.get(body.categoryId)
 
-      createMany: async ({ body }) => {
-        const category = await this.categoriesService.get(body.categoryId)
+      if (!category) {
+        throw new BadRequestException("Category not found")
+      }
 
-        if (!category) {
-          throw new BadRequestException("Category not found")
-        }
+      await this.questionsService.createMany(
+        body.questions.map(q => ({
+          question: q.question,
+          correctAnswer: q.correctAnswer,
+          incorrectAnswers: q.incorrectAnswers,
+          categoryId: body.categoryId,
+          difficulty: body.difficulty,
+        })),
+      )
 
-        await this.questionsService.createMany(
-          body.questions.map(q => ({
-            question: q.question,
-            correctAnswer: q.correctAnswer,
-            incorrectAnswers: q.incorrectAnswers,
-            categoryId: body.categoryId,
-            difficulty: body.difficulty,
-          })),
-        )
+      return {
+        status: 201,
+        body: { success: true },
+      }
+    })
+  }
 
-        return {
-          status: 201,
-          body: { success: true },
-        }
-      },
+  @TsRestHandler(contract.questions.patch)
+  @UseGuards(AuthGuard)
+  async patch() {
+    return tsRestHandler(contract.questions.patch, async ({ body, params: { id } }) => {
+      const updatedQuestion = await this.questionsService.patch(id, body)
 
-      patch: async ({ body, params: { id } }) => {
-        const updatedQuestion = await this.questionsService.patch(id, body)
+      return {
+        status: 200,
+        body: updatedQuestion,
+      }
+    })
+  }
 
-        return {
-          status: 200,
-          body: updatedQuestion,
-        }
-      },
+  @TsRestHandler(contract.questions.delete)
+  @UseGuards(AuthGuard)
+  async delete() {
+    return tsRestHandler(contract.questions.delete, async ({ params: { id } }) => {
+      await this.questionsService.delete(id)
 
-      delete: async ({ params: { id } }) => {
-        await this.questionsService.delete(id)
-
-        return {
-          status: 204,
-          body: undefined,
-        }
-      },
+      return {
+        status: 204,
+        body: undefined,
+      }
     })
   }
 }

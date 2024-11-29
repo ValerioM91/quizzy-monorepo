@@ -23,10 +23,12 @@ export const contract = c.router(
         body: LoginSchema,
         responses: {
           200: z.object({
-            user: z.object({
-              id: z.number(),
-              email: z.string(),
-            }),
+            user: z
+              .object({
+                id: z.number(),
+                email: z.string(),
+              })
+              .strict(),
           }),
           404: z.object({
             message: z.string(),
@@ -39,6 +41,19 @@ export const contract = c.router(
         body: z.object({}),
         responses: {
           200: z.object({ success: z.boolean() }),
+        },
+      },
+      currentUser: {
+        method: 'GET',
+        path: '/user',
+        responses: {
+          200: z.object({
+            id: z.number(),
+            email: z.string(),
+          }),
+          404: z.object({
+            message: z.string(),
+          }),
         },
       },
     },

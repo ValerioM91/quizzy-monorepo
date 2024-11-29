@@ -36,6 +36,6 @@ export class AuthService {
       throw new BadRequestException("Invalid password")
     }
 
-    return user
+    return { id: user.id, email: user.email }
   }
 }
