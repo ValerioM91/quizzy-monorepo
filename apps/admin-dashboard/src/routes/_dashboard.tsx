@@ -1,10 +1,17 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router"
+import { createFileRoute, Outlet, redirect } from "@tanstack/react-router"
 import SidenavToggle from "../components/ui/SidenavToggle"
 import { SIDENAV_INPUT_ID } from "../config"
 import SideNav from "../components/ui/Sidenav"
 import { FaBars } from "react-icons/fa6"
+import { isAuthenticated } from "../utils/isAuthenticated"
 
 export const Route = createFileRoute("/_dashboard")({
+  beforeLoad: async () => {
+    if (!(await isAuthenticated())) {
+      throw redirect({ to: "/" })
+    }
+  },
+
   component: () => (
     <div className="mx-auto h-[100dvh] w-full md:grid md:grid-cols-[20rem_1fr]">
       <div>

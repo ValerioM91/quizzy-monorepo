@@ -10,19 +10,20 @@ import Label from "../../components/ui/Label"
 import { difficultySchema } from "api-contract"
 import Pagination from "../../components/ui/Pagination"
 
+const validateSearchSchema = z.object({
+  category: z.coerce.string().default(""),
+  difficulty: difficultySchema.catch("easy"),
+  page: z.coerce.number().min(1).optional(),
+})
+
 export const Route = createFileRoute("/_dashboard/questions")({
   component: Questions,
-  validateSearch: z.object({
-    category: z.coerce.string().catch(""),
-    difficulty: difficultySchema.catch("easy"),
-    page: z.coerce.number().min(1).optional(),
-  }),
-  onError: () => {},
+  validateSearch: validateSearchSchema,
 })
 
 function Questions() {
   const navigate = useNavigate({ from: Route.fullPath })
-  const { category, difficulty, page = 1 } = Route.useSearch()
+  const { category, difficulty, page = 1 } = Route.useSearch() as z.infer<typeof validateSearchSchema>
 
   const { data: categories } = apiClient.category.getAll.useQuery(["category.getAll"])
   const { data } = apiClient.questions.getPaginated.useQuery(
@@ -37,9 +38,13 @@ function Questions() {
     value,
   }: { name: "difficulty"; value: Difficulty } | { name: "category"; value: number }) => {
     if (name === "difficulty") {
-      navigate({ search: { category, difficulty: value } })
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      navigate({ search: { category: +category, difficulty: value } })
     } else {
-      navigate({ search: { category: value, difficulty } })
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
+      navigate({ search: { category: +value, difficulty } })
     }
   }
 
