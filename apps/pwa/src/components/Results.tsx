@@ -1,7 +1,14 @@
+import { useEffect } from "react"
+import { useAudio } from "./AudioProvider"
 import Link from "./Link"
 import Main from "./Main"
 
 const Results = ({ correctPercentage }: { correctPercentage: number }) => {
+  const { setGameTrack } = useAudio()
+  useEffect(() => {
+    setGameTrack("victory")
+  }, [setGameTrack])
+
   let content = {
     title: ["You", "Lost!"],
     description: `You answered only ${correctPercentage}% of questions correctly!`,

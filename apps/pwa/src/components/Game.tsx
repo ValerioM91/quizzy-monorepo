@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useGame from "../utils/useGame"
 import { HomeIcon } from "@radix-ui/react-icons"
 import type { Question } from "database"
@@ -7,6 +7,7 @@ import Main from "./Main"
 import Button from "./Button"
 import Results from "./Results"
 import Link from "./Link"
+import { useAudio } from "./AudioProvider"
 
 const Game = ({ questions }: { questions: Question[] }) => {
   const {
@@ -20,6 +21,11 @@ const Game = ({ questions }: { questions: Question[] }) => {
     question,
     isLastQuestion,
   } = useGame(questions)
+
+  const { setGameTrack } = useAudio()
+  useEffect(() => {
+    setGameTrack("game")
+  }, [setGameTrack])
 
   const [showResults, setShowResults] = useState(false)
 

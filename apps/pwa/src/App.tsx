@@ -4,6 +4,7 @@ import { RouterProvider, createRouter } from "@tanstack/react-router"
 // Import the generated route tree
 import { routeTree } from "./routeTree.gen"
 import { Toaster } from "react-hot-toast"
+import { AudioProvider } from "./components/AudioProvider"
 
 // Create a new router instance
 const router = createRouter({ routeTree })
@@ -18,8 +19,10 @@ declare module "@tanstack/react-router" {
 function App() {
   return (
     <StrictMode>
-      <RouterProvider router={router} />
-      <Toaster />
+      <AudioProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </AudioProvider>
     </StrictMode>
   )
 }

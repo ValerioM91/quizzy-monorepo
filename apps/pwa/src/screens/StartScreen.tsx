@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useNavigate } from "@tanstack/react-router"
+import { useEffect, useState } from "react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/Select"
 import Label from "../components/Label"
 import Main from "../components/Main"
 import Link from "../components/Link"
 import { cn } from "../utils/cn"
 import apiClient from "../api-client"
+import { useAudio } from "../components/AudioProvider"
 import type { Difficulty } from "database"
 
 const StartScreen = () => {
@@ -13,16 +15,28 @@ const StartScreen = () => {
   const [selectOpen, setSelectOpen] = useState(false)
   const [difficulty, setDifficulty] = useState<Difficulty>()
 
+  const { setGameTrack } = useAudio()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    setGameTrack("menu")
+  }, [setGameTrack])
+
   const { data: categories } = apiClient.category.getAll.useQuery(["category.getAll"], undefined, {
     staleTime: 1000 * 60 * 60,
     queryKey: ["category.getAll"],
   })
 
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    navigate({ to: "/Game", search: { amount, category, difficulty } })
+  }
+
   return (
     <Main>
       <h2 className="skewed-heading mb-4 px-12 py-8">QUIZZY</h2>
 
-      <form className="grid w-full max-w-md gap-6 rounded-lg p-10">
+      <form className="grid w-full max-w-md gap-6 rounded-lg p-10" onSubmit={onSubmit}>
         <div className="flex flex-col rounded-lg ">
           <Label
             htmlFor="category"
