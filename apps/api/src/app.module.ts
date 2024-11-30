@@ -35,14 +35,10 @@ export class AppModule {
   constructor(private configService: ConfigService) {}
 
   configure(consumer: MiddlewareConsumer) {
-    const isProd = process.env.NODE_ENV === "production"
-
     consumer
       .apply(
         cookieSession({
           maxAge: 24 * 60 * 60 * 1000,
-          secure: isProd,
-          sameSite: isProd ? "none" : "lax",
           httpOnly: true,
           keys: [this.configService.get("COOKIE_KEY")],
         }),
