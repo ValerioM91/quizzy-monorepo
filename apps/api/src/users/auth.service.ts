@@ -1,12 +1,15 @@
-import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from "@nestjs/common"
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException, UseGuards } from "@nestjs/common"
 import { UsersService } from "./users.service"
 import { comparePasswords, hashPassword } from "../../utils/hashPassword"
+import { AdminGuard } from "../guards/admin.guard"
 
 @Injectable()
 export class AuthService {
   // eslint-disable-next-line no-unused-vars
   constructor(private usersService: UsersService) {}
 
+  // For now, I'm allowing only admins to create new users to access to dashboard
+  @UseGuards(AdminGuard)
   async signup({ email, password }: { email: string; password: string }) {
     const existingUser = await this.usersService.findByEmail(email)
     if (existingUser) {
