@@ -3,6 +3,7 @@ import { contract } from "api-contract"
 
 const apiClient = initQueryClient(contract, {
   baseHeaders: {},
+  credentials: "include",
   baseUrl: "",
 })
 
