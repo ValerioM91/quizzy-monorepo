@@ -39,9 +39,8 @@ export class AppModule {
       .apply(
         cookieSession({
           maxAge: 24 * 60 * 60 * 1000,
-          // secure: true,
-          // signed: true,
-          // httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          httpOnly: true,
           keys: [this.configService.get("COOKIE_KEY")],
         }),
       )

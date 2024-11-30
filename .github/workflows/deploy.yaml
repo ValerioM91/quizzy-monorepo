@@ -50,8 +50,8 @@ jobs:
       - name: Deploy to ECS
         uses: imehedi/actions-awscli-v2@latest
         with:
-          args: ecs update-service --cluster MpcsjNestJSStabilityIntegration --service MpcsjStabilityAPI --force-new-deployment
+          args: ecs update-service --cluster quizzy-monorepo-cluster --service quizzyMonorepoService --force-new-deployment
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: 'us-west-2'
+          AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
