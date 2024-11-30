@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useRef, useState, type PropsWithChildren } from "react"
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type PropsWithChildren } from "react"
 import Button from "./Button"
 import { PlayIcon } from "./AudioSvgs"
 import { cn } from "../utils/cn"
@@ -15,15 +15,20 @@ export const AudioProvider = ({ children }: PropsWithChildren) => {
   const [audioTrack, setAudioTrack] = useState("./menu.mp3")
   const [isPlaying, setIsPlaying] = useState(false)
 
-  const setGameTrack = useCallback(
-    (track: "menu" | "game" | "victory") => {
-      const _track = `./${track}.mp3`
-      setAudioTrack(_track)
+  const setGameTrack = useCallback((track: "menu" | "game" | "victory") => {
+    const _track = `./${track}.mp3`
+    setAudioTrack(current => {
+      if (current === _track) {
+        return current
+      }
       audioRef.current && (audioRef.current.src = _track)
-      isPlaying && audioRef.current?.play()
-    },
-    [isPlaying],
-  )
+      return _track
+    })
+  }, [])
+
+  useEffect(() => {
+    isPlaying && audioRef.current?.play()
+  }, [isPlaying, audioTrack])
 
   const togglePlay = useCallback(() => {
     if (isPlaying) {
